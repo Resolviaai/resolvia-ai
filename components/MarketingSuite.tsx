@@ -66,7 +66,8 @@ const MarketingSuite: React.FC<MarketingSuiteProps> = ({ idea, onMarketingGenera
             <p className="text-text-secondary mb-6">Generate your launch marketing materials with a click of a button.</p>
 
             {error && (
-                <div className="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded relative mb-6" role="alert">
+                <div className="glass-strong p-4 rounded-xl border border-red-500/50 text-red-400 mb-6" role="alert">
+                    <i className="fas fa-exclamation-circle mr-2"></i>
                     <strong className="font-bold">Error: </strong>
                     <span className="block sm:inline">{error}</span>
                 </div>
@@ -96,9 +97,10 @@ const MarketingSuite: React.FC<MarketingSuiteProps> = ({ idea, onMarketingGenera
                 <button
                     onClick={() => onMarketingGenerated(assets as MarketingAssets)}
                     disabled={!allAssetsGenerated}
-                    className="bg-secondary text-white font-bold py-3 px-6 rounded-lg hover:bg-emerald-500 disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors duration-300 w-full sm:w-auto"
+                    className="bg-gradient-to-r from-secondary to-secondary-dark text-white font-bold py-3 px-8 rounded-xl hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all hover-lift w-full sm:w-auto shadow-lg"
                 >
-                   Complete & Finish
+                    <i className="fas fa-check-circle mr-2"></i>
+                    Complete & Finish
                 </button>
             </div>
         </Card>
@@ -116,16 +118,25 @@ interface MarketingAssetProps {
 
 const MarketingAsset: React.FC<MarketingAssetProps> = ({ title, type, loading, onGenerate, children }) => {
     return (
-        <div className="bg-background p-4 rounded-lg border border-border">
+        <div className="glass p-4 rounded-xl border border-border/50">
             <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-bold">{title}</h3>
                 {!children && (
-                    <button onClick={() => onGenerate(type)} disabled={loading} className="bg-primary text-white text-xs font-bold py-1 px-3 rounded hover:bg-indigo-500 disabled:bg-gray-500 transition">
+                    <button 
+                        onClick={() => onGenerate(type)} 
+                        disabled={loading} 
+                        className="bg-gradient-to-r from-primary to-secondary text-white text-xs font-bold py-2 px-4 rounded-lg hover:opacity-90 disabled:opacity-50 transition-all shadow-lg"
+                    >
+                        <i className="fas fa-magic mr-1"></i>
                         {loading ? 'Generating...' : 'Generate'}
                     </button>
                 )}
             </div>
-            {loading && <div className="flex justify-center items-center h-24"><LoadingSpinner /></div>}
+            {loading && (
+                <div className="flex justify-center items-center h-24">
+                    <LoadingSpinner />
+                </div>
+            )}
             <div>{children}</div>
         </div>
     );

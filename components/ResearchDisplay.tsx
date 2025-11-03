@@ -41,11 +41,22 @@ const ResearchDisplay: React.FC<ResearchDisplayProps> = ({ idea, onResearchCompl
     };
 
     if (isLoading) {
-        return <div className="text-center p-10"><LoadingSpinner text="Conducting AI Market Research..." /></div>;
+        return (
+            <div className="flex items-center justify-center min-h-[400px]">
+                <div className="text-center">
+                    <LoadingSpinner text="Conducting AI Market Research..." />
+                </div>
+            </div>
+        );
     }
 
     if (error) {
-        return <p className="text-red-500 text-center">{error}</p>;
+        return (
+            <div className="glass-strong p-6 rounded-xl border border-red-500/50 text-red-400 text-center">
+                <i className="fas fa-exclamation-circle text-3xl mb-3"></i>
+                <p>{error}</p>
+            </div>
+        );
     }
 
     if (!researchData) return null;
@@ -73,8 +84,8 @@ const ResearchDisplay: React.FC<ResearchDisplayProps> = ({ idea, onResearchCompl
                             {researchData.monetization.map((m, i) => <li key={i}>{m}</li>)}
                         </ul>
                     ) : <p className="text-text-secondary">Monetization strategies could not be determined.</p>}
-                </Card>
-            </Card>
+                    </Card>
+                    </div>
 
             {researchData.sources.length > 0 && (
                 <Card>
@@ -92,8 +103,9 @@ const ResearchDisplay: React.FC<ResearchDisplayProps> = ({ idea, onResearchCompl
             <div className="text-center mt-8">
                 <button 
                     onClick={handleProceed}
-                    className="bg-primary text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-500 transition-colors duration-300 w-full sm:w-auto"
+                    className="bg-gradient-to-r from-primary to-secondary text-white font-bold py-3 px-8 rounded-xl hover:opacity-90 transition-all hover-lift w-full sm:w-auto shadow-lg"
                 >
+                    <i className="fas fa-code mr-2"></i>
                     Proceed to Code Generation
                 </button>
             </div>
