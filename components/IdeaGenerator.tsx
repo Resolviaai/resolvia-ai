@@ -38,9 +38,10 @@ const IdeaGenerator: React.FC<IdeaGeneratorProps> = ({ onIdeaSelected }) => {
     };
 
     return (
-        <div className="bg-surface p-6 sm:p-8 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold mb-2">Let's Find Your Big Idea</h2>
-            <p className="text-text-secondary mb-6">Answer a few questions to help our AI brainstorm some SaaS concepts for you.</p>
+        <div className="space-y-6">
+            <div className="glass p-6 sm:p-8 rounded-xl">
+                <h2 className="text-2xl font-bold mb-2">Let's Find Your Big Idea</h2>
+                <p className="text-text-secondary mb-6">Answer a few questions to help our AI brainstorm some SaaS concepts for you.</p>
 
             <form onSubmit={handleSubmit}>
                 <div className="space-y-6">
@@ -54,7 +55,7 @@ const IdeaGenerator: React.FC<IdeaGeneratorProps> = ({ onIdeaSelected }) => {
                                 rows={2}
                                 value={answers[index]}
                                 onChange={(e) => handleAnswerChange(index, e.target.value)}
-                                className="w-full bg-background border border-border rounded-md p-2 focus:ring-primary focus:border-primary transition"
+                                className="w-full glass border border-border/50 rounded-xl p-3 focus:ring-2 focus:ring-primary focus:border-primary transition-all text-text-primary placeholder-text-secondary"
                                 placeholder="Your thoughts..."
                             />
                         </div>
@@ -64,28 +65,42 @@ const IdeaGenerator: React.FC<IdeaGeneratorProps> = ({ onIdeaSelected }) => {
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="bg-primary text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-500 disabled:bg-gray-500 transition-colors duration-300 w-full sm:w-auto"
+                        className="bg-gradient-to-r from-primary to-secondary text-white font-bold py-3 px-8 rounded-xl hover:opacity-90 disabled:opacity-50 transition-all hover-lift w-full sm:w-auto shadow-lg"
                     >
-                        {isLoading ? <LoadingSpinner text="Generating Ideas..." /> : 'Generate Ideas'}
+                        {isLoading ? <LoadingSpinner text="Generating Ideas..." /> : (
+                            <>
+                                <i className="fas fa-lightbulb mr-2"></i>
+                                Generate Ideas
+                            </>
+                        )}
                     </button>
                 </div>
             </form>
 
-            {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
+            {error && (
+                <div className="glass-strong p-4 rounded-xl border border-red-500/50 text-red-400 text-center">
+                    <i className="fas fa-exclamation-circle mr-2"></i>
+                    {error}
+                </div>
+            )}
+            </div>
 
             {generatedIdeas.length > 0 && (
-                <div className="mt-10">
-                    <h3 className="text-xl font-bold text-center mb-6">Here are some ideas for you:</h3>
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="space-y-4">
+                    <h3 className="text-xl font-bold text-center">Here are some ideas for you:</h3>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {generatedIdeas.map((idea, index) => (
-                            <div key={index} className="bg-background p-6 rounded-lg border border-border flex flex-col">
+                            <div key={index} className="glass p-6 rounded-xl border border-border/50 flex flex-col hover-lift">
                                 <h4 className="text-lg font-bold text-secondary">{idea.name}</h4>
-                                <p className="text-text-secondary mt-2 flex-grow">{idea.description}</p>
-                                <p className="text-sm text-gray-400 mt-4"><strong className="text-text-primary">Target:</strong> {idea.targetAudience}</p>
+                                <p className="text-text-secondary mt-2 flex-grow text-sm">{idea.description}</p>
+                                <p className="text-xs text-text-secondary mt-4">
+                                    <strong className="text-text-primary">Target:</strong> {idea.targetAudience}
+                                </p>
                                 <button
                                     onClick={() => onIdeaSelected(idea)}
-                                    className="mt-6 bg-secondary text-white font-semibold py-2 px-4 rounded-lg hover:bg-emerald-500 transition-colors duration-300 w-full"
+                                    className="mt-6 bg-gradient-to-r from-secondary to-secondary-dark text-white font-semibold py-2 px-4 rounded-xl hover:opacity-90 transition-all w-full shadow-lg"
                                 >
+                                    <i className="fas fa-search mr-2"></i>
                                     Select & Research This Idea
                                 </button>
                             </div>
